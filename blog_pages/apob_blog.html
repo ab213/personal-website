@@ -63,10 +63,13 @@
   <p><em>This essay draws inspiration from the work and insights of Bryan Johnson and Peter Attia.</em></p>
   
   <p style="margin-top: 20px;">
-    <button onclick="history.back()" style="padding: 10px 20px; border: none; border-radius: 8px; background-color: #333; color: #fff; cursor: pointer;">
+    <button 
+        onclick="if (document.referrer) { history.back(); } else { window.location.href='../index.html'; }" 
+        style="padding: 10px 20px; border: none; border-radius: 8px; background-color: #333; color: #fff; cursor: pointer;">
         ← Back
     </button>
   </p>
+
 
 </body>
 </html>
