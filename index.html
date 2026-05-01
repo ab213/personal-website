@@ -215,6 +215,81 @@
             font-weight: 400;
         }
 
+        .question-promo {
+            margin-top: 10px;
+            margin-bottom: 40px;
+            padding: 22px 24px;
+            border: 1px solid #e9ecef;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.65);
+        }
+
+        .question-promo h3 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            color: #333;
+            font-weight: 400;
+        }
+
+        .question-promo p {
+            color: #333;
+            margin-bottom: 14px;
+        }
+
+        .question-promo .question-intro {
+            margin-bottom: 10px;
+        }
+
+        .question-promo a {
+            color: #666;
+            text-decoration: underline;
+        }
+
+        .question-promo a:hover {
+            color: #333;
+        }
+
+        .home-question-status {
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .home-question-list {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .home-question-item {
+            border: 1px solid #e9ecef;
+            border-radius: 16px;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .home-question-topic {
+            display: inline-block;
+            margin-bottom: 8px;
+            padding: 4px 9px;
+            border-radius: 999px;
+            background: #edf2e9;
+            color: #36503a;
+            font-size: 0.8rem;
+            text-transform: lowercase;
+        }
+
+        .home-question-text {
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .home-question-meta {
+            color: #666;
+            font-size: 0.92rem;
+            margin-bottom: 0;
+        }
+
         .recent-item {
             margin-bottom: 15px;
             padding-left: 15px;
@@ -276,7 +351,7 @@
             .side-border {
                 width: 250px; /* wider border */
             }
-
+        }
 
         @media (max-width: 480px) {
             .nav-links {
@@ -292,13 +367,7 @@
 <body>
     <!-- Image borders (left & right only) -->
     <div class="side-border left"></div>
-    <div class="side-border left"></div>
-    <div class="side-border left"></div>
-    <div class="side-border left"></div>
     <div class="side-border right"></div>
-    <div class="side-border right"></div>
-    <div class="side-border right"></div>
-    <div class="side-border right"></div>    
 
     <header>
         <nav>
@@ -308,6 +377,7 @@
                 <li><a href="https://drive.google.com/file/d/1gACxNAp-4cl9CS2JrLGhnz-tMSGhlqSs/view?usp=sharing">resume</a></li>
                 <li><a href="literature.html">literature</a></li>
                 <li><a href="research_papers.html">research-papers</a></li>
+                <li><a href="questions.html">questions</a></li>
                 <li><a href="index.html">contact</a></li>
             </ul>
         </nav>
@@ -338,6 +408,14 @@
             <p><strong>  email:</strong> <a href="mailto:adityaabiyani27@gmail.com">adityaabiyani27[at]gmail[dot]com</a></p>
         </section>
 
+        <section class="question-promo">
+            <h3>questions worth asking:</h3>
+            <p class="question-intro">I built a small public wall for thoughtful questions around purpose, books, engineering, focus, health, and the work worth doing.</p>
+            <p id="home-question-status" class="home-question-status">Loading recent questions...</p>
+            <ul id="home-question-list" class="home-question-list"></ul>
+            <a href="questions.html">ask one serious question</a>
+        </section>
+
         <section class="recent-section">
             <h3>recent blogs:</h3>
 
@@ -358,5 +436,9 @@
             </div>
         </section>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+    <script src="questions-config.js"></script>
+    <script src="js/questions-preview.js" defer></script>
 </body>
 </html>

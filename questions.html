@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questions Worth Asking</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f6f4ef;
+            color: #2f2a25;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .side-border {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 180px;
+            background: url("borders.png") repeat-y center;
+            background-size: contain;
+            opacity: 0.18;
+            z-index: -1;
+        }
+
+        .side-border.left {
+            left: 0;
+        }
+
+        .side-border.right {
+            right: 0;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            background: rgba(246, 244, 239, 0.94);
+            border-bottom: 1px solid rgba(47, 42, 37, 0.08);
+        }
+
+        nav {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo,
+        .nav-links a {
+            text-decoration: none;
+            color: #2f2a25;
+        }
+
+        .logo {
+            font-size: 1rem;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 22px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #5d564f;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #2f2a25;
+        }
+
+        main {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 48px 24px 80px;
+        }
+
+        .page-shell {
+            background: rgba(255, 252, 247, 0.9);
+            border: 1px solid rgba(47, 42, 37, 0.08);
+            border-radius: 36px;
+            box-shadow: 0 18px 60px rgba(47, 42, 37, 0.08);
+            padding: 48px;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+            gap: 36px;
+            margin-bottom: 40px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #d8e4f0;
+            color: #1e3346;
+            font-size: 0.88rem;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 4vw, 4.25rem);
+            line-height: 1.03;
+            margin-bottom: 18px;
+            letter-spacing: -0.04em;
+        }
+
+        .hero-copy p,
+        .hero-note p,
+        .card p,
+        label,
+        .helper,
+        .status,
+        .empty-state,
+        .question-meta,
+        .question-count {
+            color: #5d564f;
+        }
+
+        .hero-copy p {
+            max-width: 62ch;
+            margin-bottom: 14px;
+        }
+
+        .hero-note {
+            background: #fffaf0;
+            border: 1px solid rgba(47, 42, 37, 0.08);
+            border-radius: 24px;
+            padding: 24px;
+            align-self: start;
+        }
+
+        .hero-note h2,
+        .form-card h2,
+        .feed-card h2 {
+            font-size: 1.15rem;
+            margin-bottom: 12px;
+        }
+
+        .hero-note ul {
+            margin-top: 18px;
+            padding-left: 18px;
+            color: #2f2a25;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+            gap: 28px;
+            align-items: start;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(47, 42, 37, 0.08);
+            border-radius: 28px;
+            padding: 28px;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 18px;
+        }
+
+        .field {
+            display: grid;
+            gap: 8px;
+        }
+
+        label {
+            font-weight: 500;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid rgba(47, 42, 37, 0.16);
+            border-radius: 16px;
+            padding: 14px 16px;
+            font: inherit;
+            background: #fff;
+            color: #2f2a25;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 2px solid rgba(127, 176, 211, 0.45);
+            border-color: #7fb0d3;
+        }
+
+        textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+
+        .checkbox-row {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .checkbox-row input {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+        }
+
+        .helper {
+            font-size: 0.93rem;
+        }
+
+        .button-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        button,
+        .text-link {
+            border: none;
+            border-radius: 999px;
+            font: inherit;
+        }
+
+        button {
+            background: #2f2a25;
+            color: #fffaf0;
+            cursor: pointer;
+            padding: 14px 22px;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        .status {
+            min-height: 24px;
+            font-size: 0.95rem;
+        }
+
+        .status.error {
+            color: #8b2e2e;
+        }
+
+        .status.success {
+            color: #275934;
+        }
+
+        .setup-notice {
+            margin-top: 14px;
+            border-radius: 18px;
+            padding: 14px 16px;
+            background: #f8efe2;
+            color: #6d5632;
+            font-size: 0.95rem;
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px 0 12px;
+        }
+
+        .filter-chip {
+            background: transparent;
+            color: #5d564f;
+            border: 1px solid rgba(47, 42, 37, 0.12);
+            padding: 9px 14px;
+        }
+
+        .filter-chip.active {
+            background: #d8e4f0;
+            color: #1e3346;
+            border-color: transparent;
+        }
+
+        .question-count {
+            font-size: 0.95rem;
+            margin-bottom: 14px;
+        }
+
+        .question-list {
+            list-style: none;
+            display: grid;
+            gap: 14px;
+        }
+
+        .question-item {
+            border: 1px solid rgba(47, 42, 37, 0.08);
+            border-radius: 22px;
+            padding: 20px;
+            background: #fffdf8;
+        }
+
+        .topic-badge {
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: #edf2e9;
+            color: #36503a;
+            font-size: 0.85rem;
+            text-transform: lowercase;
+        }
+
+        .question-text {
+            color: #2f2a25;
+            font-size: 1.05rem;
+            line-height: 1.55;
+            white-space: pre-wrap;
+        }
+
+        .question-meta {
+            margin-top: 14px;
+            font-size: 0.92rem;
+        }
+
+        .question-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: #365d7a;
+            text-decoration: underline;
+        }
+
+        .empty-state {
+            border: 1px dashed rgba(47, 42, 37, 0.16);
+            border-radius: 22px;
+            padding: 22px;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        .text-link {
+            color: #365d7a;
+            background: transparent;
+            padding: 0;
+            text-decoration: underline;
+        }
+
+        footer {
+            margin-top: 28px;
+            color: #5d564f;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        @media (max-width: 980px) {
+            .hero,
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .page-shell {
+                padding: 32px 22px;
+                border-radius: 28px;
+            }
+        }
+
+        @media (max-width: 720px) {
+            nav {
+                height: auto;
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 16px 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 14px;
+            }
+
+            main {
+                padding: 28px 16px 56px;
+            }
+
+            .side-border {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="side-border left"></div>
+    <div class="side-border right"></div>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><strong>aditya biyani</strong></a>
+            <ul class="nav-links">
+                <li><a href="index.html">me</a></li>
+                <li><a href="https://drive.google.com/file/d/1gACxNAp-4cl9CS2JrLGhnz-tMSGhlqSs/view?usp=sharing">resume</a></li>
+                <li><a href="literature.html">literature</a></li>
+                <li><a href="research_papers.html">research-papers</a></li>
+                <li><a href="questions.html" class="active">questions</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-shell">
+            <section class="hero">
+                <div class="hero-copy">
+                    <span class="eyebrow">Questions Worth Asking</span>
+                    <h1>Ask one serious question.</h1>
+                    <p>This page is for questions with a little weight behind them: books, purpose, engineering, focus, health, ambition, and the things we usually only talk about after midnight.</p>
+                    <p>If a question stays with me, I may answer it in a future post or conversation. New submissions are published right away.</p>
+                </div>
+
+                <aside class="hero-note">
+                    <h2>What fits here</h2>
+                    <p>Not "hey what's up." More like:</p>
+                    <ul>
+                        <li>What are you building your life around right now?</li>
+                        <li>What do young engineers spend too little time thinking about?</li>
+                        <li>Which books are worth rereading when your values start shifting?</li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section class="layout">
+                <article class="card form-card">
+                    <h2>Submit a question</h2>
+                    <p class="helper">Questions are stored in Supabase and published to the site right away.</p>
+
+                    <form id="question-form" class="form-grid" novalidate>
+                        <div class="field">
+                            <label for="display-name">Name or alias (optional)</label>
+                            <input id="display-name" name="display_name" type="text" maxlength="40" placeholder="anonymous is fine">
+                        </div>
+
+                        <div class="field">
+                            <label for="topic">Topic</label>
+                            <select id="topic" name="topic" required>
+                                <option value="">Choose a lens</option>
+                                <option value="purpose">purpose</option>
+                                <option value="engineering">engineering</option>
+                                <option value="books">books</option>
+                                <option value="career">career</option>
+                                <option value="focus">focus</option>
+                                <option value="health">health</option>
+                                <option value="life">life</option>
+                                <option value="other">other</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="question-text">Your question</label>
+                            <textarea id="question-text" name="question_text" maxlength="280" placeholder="One serious question, 20 to 280 characters." required></textarea>
+                            <p class="helper">Keep it direct. Thoughtful beats polished.</p>
+                        </div>
+
+                        <label class="checkbox-row" for="publish-name">
+                            <input id="publish-name" name="publish_name" type="checkbox">
+                            <span>Show my name with the question publicly.</span>
+                        </label>
+
+                        <div class="visually-hidden" aria-hidden="true">
+                            <label for="company">Leave this field empty</label>
+                            <input id="company" name="company" type="text" tabindex="-1" autocomplete="off">
+                        </div>
+
+                        <div class="button-row">
+                            <button id="submit-button" type="submit">Send question</button>
+                            <button id="refresh-button" class="text-link" type="button">Refresh public questions</button>
+                        </div>
+
+                        <p id="form-status" class="status" aria-live="polite"></p>
+                    </form>
+
+                    <div id="setup-notice" class="setup-notice" hidden>
+                        Add your Supabase project URL and publishable key in <code>questions-config.js</code>, then run the SQL in <code>supabase/questions_worth_asking.sql</code>.
+                    </div>
+                </article>
+
+                <article class="card feed-card">
+                    <h2>Public questions</h2>
+                    <p class="helper">A small public archive of questions worth holding onto.</p>
+                    <div id="filter-row" class="filter-row" aria-label="Question topics"></div>
+                    <p id="question-count" class="question-count"></p>
+                    <div id="feed-status" class="status" aria-live="polite"></div>
+                    <ul id="question-list" class="question-list"></ul>
+                </article>
+            </section>
+
+            <footer>
+                Some questions are better when they stay unresolved for a while.
+            </footer>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+    <script src="questions-config.js"></script>
+    <script src="js/questions.js" defer></script>
+</body>
+</html>
